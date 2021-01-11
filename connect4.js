@@ -167,7 +167,10 @@ class Player {
 document.querySelector("#start-game").addEventListener('click', () => {
   let p1 = new Player(document.querySelector("#p1-color").value);
   let p2 = new Player(document.querySelector("#p2-color").value);
-  new Game(p1, p2)
+
+  if (!(p1.color === "" || p2.color === "")) {
+    new Game(p1, p2)
+  } else {
+    alert("You must choose two colors to play!")
+  }
 })
-
-
