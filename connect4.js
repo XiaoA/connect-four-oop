@@ -86,6 +86,9 @@ class Game {
 
   endGame(msg) {
     alert(msg);
+    const gameBoard = document.querySelector("#column-top");
+    gameBoard.removeEventListener("click", this.handleGameClick);
+    alert("Click 'Start Game' to play again");    
   }
 
   /** handleClick: handle click of column top to play piece */
