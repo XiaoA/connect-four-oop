@@ -13,6 +13,7 @@ class Game {
     this.currentPlayer = p1;
     this.makeBoard();
     this.makeHtmlBoard();
+    this.gameOver = false;
   }
   
   /** makeBoard: create in-JS board structure:
@@ -29,6 +30,7 @@ class Game {
 
   makeHtmlBoard() {
     const board = document.getElementById('board');
+    board.innerHTML = '';
 
     // make column tops (clickable area for adding a piece to that column)
     const top = document.createElement('tr');
@@ -74,8 +76,7 @@ class Game {
   placeInTable(y, x) {
     const piece = document.createElement('div');
     piece.classList.add('piece');
-    piece.classList.add(`p${this.currentPlayer}`);
-    console.log(`p${this.currentPlayer}`);
+    piece.style.backgroundColor = this.currentPlayer.color;
     piece.style.top = -50 * (y + 2);
 
     const spot = document.getElementById(`${y}-${x}`);
@@ -109,7 +110,8 @@ class Game {
     
     // check for win
     if (this.checkForWin()) {
-      return this.endGame(`Player ${this.currentPlayer} won!`);
+      this.gameOver = true;
+      return this.endGame(`The ${this.currentPlayer.color} player won!`);
     }
     
     // check for tie
@@ -118,7 +120,7 @@ class Game {
     }
     
     // switch players
-    this.currentPlayer = this.currentPlayer === 1 ? 2 : 1;
+    this.currentPlayer = this.currentPlayer === this.players[0] ? this.players[1] : this.players[0];
   }
 
   /** checkForWin: check board cell-by-cell for "does a win start here?" */
@@ -156,8 +158,16 @@ class Game {
   }
 }
 
+class Player {
+  constructor(color) {
+    this.color = color;
+  }
+}
+
 document.querySelector("#start-game").addEventListener('click', () => {
-  new Game(1, 2)
+  let p1 = new Player(document.querySelector("#p1-color").value);
+  let p2 = new Player(document.querySelector("#p2-color").value);
+  new Game(p1, p2)
 })
 
 
