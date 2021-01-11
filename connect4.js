@@ -153,5 +153,8 @@ class Game {
   }
 }
 
-new Game(1, 2);
+document.querySelector("#start-game").addEventListener('click', () => {
+  new Game(1, 2)
+})
+
 
